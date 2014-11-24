@@ -7,4 +7,4 @@ Robot Motion
 
 
 ###Documentation
-Swan Bapty and Hamza El-Saawy helped me define my pins as constants and initialize the PWM wave. 
+Sean Bapty and Hamza El-Saawy helped me define my pins as constants and initialize the PWM wave. 
