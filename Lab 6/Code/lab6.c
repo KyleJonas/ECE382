@@ -10,8 +10,8 @@
 
 #define run 	1000000
 #define delay 	3000000
-#define hTurn	0025000
-#define	Turn	0500000
+#define hTurn	0500000
+#define	Turn	0750000
 
 // (1A)		P2.2
 // (2A)		P2.1
@@ -94,9 +94,9 @@ void main(void) {
 // (2A)		P2.1
 // (1,2EN)	P2.0
 
-// (3A)		P2.5
-// (4A)		P2.4
 // (3,4EN)	P2.3
+// (3A)		P2.4
+// (4A)		P2.5
 
 void forward(){
 
