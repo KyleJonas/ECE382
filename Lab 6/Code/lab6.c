@@ -10,8 +10,8 @@
 
 #define run 	1000000
 #define delay 	3000000
-#define hTurn	1000000	// find value
-#define	Turn	1000000 // find value
+#define hTurn	0025000
+#define	Turn	0500000
 
 // (1A)		P2.2
 // (2A)		P2.1
@@ -56,8 +56,6 @@ void main(void) {
 
     	forward();
     	__delay_cycles(run);
-    	__delay_cycles(run);
-    	__delay_cycles(run);
     	stop();
     	__delay_cycles(delay);
 
@@ -67,14 +65,25 @@ void main(void) {
    	    __delay_cycles(delay);
 
    	    left();
- 	    __delay_cycles(run);
+ 	    __delay_cycles(hTurn);
    	    stop();
    	    __delay_cycles(delay);
 
    	    right();
- 	    __delay_cycles(run);
+ 	    __delay_cycles(hTurn);
    	    stop();
    	    __delay_cycles(delay);
+
+   	    left();
+ 	    __delay_cycles(Turn);
+   	    stop();
+   	    __delay_cycles(delay);
+
+   	    right();
+ 	    __delay_cycles(Turn);
+   	    stop();
+   	    __delay_cycles(delay);
+
 
     }// end while
 
