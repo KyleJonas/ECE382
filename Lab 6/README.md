@@ -205,6 +205,9 @@ void right(){
 }// end right
 ```
 
+##Debugging
+
+My first issue resulted in not correctly initalizing the motor pins. I founds out I was try to include some parts of the motor before I actually initalized it. I fixed this by compltly redoing my initalizatoin and completeing it in full for both motors instead of one at a time throught the code. The majority of my debuggin was spent getting the motors to go in their correct direction for each method. I was able to get one motor to work however the other motor was not responding correctly. it was quite frustrating and redid my drive code, commenting for each motor. Ultimately I redid the wiring for the motor controlls, finiding that two wires were switched.
 
 ###Documentation
 I referenced Jasper Arneberg's code to help me fix a syntax error in initalizing the motor pins.
