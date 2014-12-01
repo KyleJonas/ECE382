@@ -14,6 +14,12 @@ To set up the lab I created a outline of the motor layout and the wiring for the
 ![Wiring](https://github.com/KyleJonas/ECE382/blob/master/Lab%206/Pictures/2014-11-18%2014.14.57.jpg "Wiring")
 ![Motor](https://github.com/KyleJonas/ECE382/blob/master/Lab%206/Pictures/2014-11-18%2014.15.08.jpg "Motor")
 
+##Robot Design
+
+Following the prelab I wired the robot up, shown bellow:
+
+![Robot](https://github.com/KyleJonas/ECE382/blob/master/Lab%206/Pictures/Robot.jpg "Robot")
+
 ##Functionality
 
 Required Functionality:   
