@@ -207,4 +207,6 @@ void right(){
 
 
 ###Documentation
-I worked with Kevin Cabusora to help debugg my lab 6 code.
+I referenced Jasper Arneberg's code to help me fix a syntax error in initalizing the motor pins.
+I worked with Kevin Cabusora to help debugg my lab 6 code. He also helped my shoot my required functionality video.
+Sean Bapty also gave me the idea to use constants for the run times and turn lengths.
