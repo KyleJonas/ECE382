@@ -84,7 +84,7 @@ In the main method I inatilized the motor pins and the timers.
 	TA1CCTL2 = OUTMOD_3;					// set TACCTL1 to Reset / Set mode
 ```
 
-I then ran a while loop for the robot commands.
+I then ran a while loop for the robot commands. The code bellow runs the required functionality.
 ```
 while(1){
 
