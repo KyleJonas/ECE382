@@ -120,7 +120,7 @@ while(1){
 
 
     }// end while
-    ```
+```
 
 The folowing methods are the robot direction controlls. They are called from the main method and control the motors so that the that the user only has to call, forward, reverse, left turn, right turn, and stop.
 
