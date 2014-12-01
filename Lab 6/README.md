@@ -16,10 +16,14 @@ To set up the lab I created a outline of the motor layout and the wiring for the
 
 ##Functionality
 
-Required Functionality: Demonstrate movement forward, backward, a small (< 45 degree) turn left and right, and a large (> 45 dgree) turn left and right. The robot should perform these movements sequentially, completely disconnected from a computer (no USB cord).    
+Required Functionality:   
+Demonstrate movement forward, backward, a small (< 45 degree) turn left and right, and a large (> 45 dgree) turn left and right. The robot should perform these movements sequentially, completely disconnected from a computer (no USB cord).   
+
 [Required Functionality Video](http://youtu.be/17MfBPkFUA0)   
 
-A Functionality: Control your robot with your remote! You should use at least four different buttons on the remote: one each to indicate motion directions of forward, backward, left, and right.   
+A Functionality:   
+Control your robot with your remote! You should use at least four different buttons on the remote: one each to indicate motion directions of forward, backward, left, and right.   
+
 (Did not complete)   
 
 ###Documentation
