@@ -1,8 +1,8 @@
 //-----------------------------------------------------------------
-// Name:    Coulston
-// File:    lab7.c
+// Name:    Kyle Jonas
+// File:    RequiredFunct.c
 // Date:    Fall 2014
-// Purp:    Collect analog samples from P1.3 and P1.4
+// Purp:    Required Functionalty for Lab 7
 //-----------------------------------------------------------------
 #include "msp430g2553.h"
 
@@ -28,7 +28,7 @@ int main(void) {
     while(1) {
 
         Left_Sensor();
-//        Center_Sensor();
+        Center_Sensor();
         Right_Sensor();
 
     } // end infinite loop

@@ -1,16 +1,14 @@
 //-----------------------------------------------------------------
-// Name:    Coulston
-// File:    lab7.c
+// Name:    Kyle Jonas
+// File:    Lab7.c
 // Date:    Fall 2014
-// Purp:    Collect analog samples from P1.3 and P1.4
+// Purp:    B Functionality for Lab7
 //-----------------------------------------------------------------
 #include "msp430g2553.h"
+#include "Lab7.h"
 
 void initMSP430();
-void Right_Sensor();
-void Left_Sensor();
-void Center_Sensor();
-//----------------------------------------------------------------------
+
 //----------------------------------------------------------------------
 int main(void) {
 
@@ -27,68 +25,23 @@ int main(void) {
 
     while(1) {
 
-        Left_Sensor();
-//        Center_Sensor();
-        Right_Sensor();
+        // LEFT
+        int Left = Left_Sensor();
+        if (Left > L_Test) P1OUT |= BIT0;
+        else               P1OUT &= ~BIT0;
+
+
+        // CENTER
+        int Center = Center_Sensor();
+        if (Center > C_Test) P1OUT |= (BIT0|BIT6);
+        else                 P1OUT &= ~(BIT0|BIT6);
+
+        // Right
+        int Right = Right_Sensor();
+        if (Right > R_Test) P1OUT |= BIT6;
+        else                P1OUT &= ~BIT6;
+
 
     } // end infinite loop
 
 } // end main
-
-void Left_Sensor() {
-    // LEFT
-    static unsigned short L_val[16];
-    static unsigned char x = 0;
-
-            ADC10CTL0 = 0;                                          // Turn off ADC subsystem
-            ADC10CTL1 = INCH_3 | ADC10DIV_3 ;                       // Channel 4, ADC10CLK/4
-            ADC10AE0 = BIT3;                                        // Make P1.3 analog input
-            ADC10CTL0 = SREF_0 | ADC10SHT_3 | ADC10ON | ENC;        // Vcc & Vss as reference
-
-            ADC10CTL0 |= ADC10SC;                                   // Start a conversion
-            while(ADC10CTL1 & ADC10BUSY);                           // Wait for conversion to complete
-            L_val[x] = ADC10MEM;                                   // collect that 10-bit value
-            if (L_val[x] > 0x0180) P1OUT |= BIT0;
-            else                   P1OUT &= ~BIT0;
-
-            x = (x+1) & 0xF;                            // This is a mod 16 increment
-} // end Left_Sensor
-
-void Center_Sensor() {
-    // CENTER
-    static unsigned short C_val[16];
-    static unsigned char y = 0;
-
-            ADC10CTL0 = 0;                                          // Turn off ADC subsystem
-            ADC10CTL1 = INCH_4 | ADC10DIV_3 ;                       // Channel 4, ADC10CLK/4
-            ADC10AE0 = BIT4;                                        // Make P1.4 analog input
-            ADC10CTL0 = SREF_0 | ADC10SHT_3 | ADC10ON | ENC;        // Vcc & Vss as reference
-
-            ADC10CTL0 |= ADC10SC;                                   // Start a conversion
-            while(ADC10CTL1 & ADC10BUSY);                           // Wait for conversion to complete
-
-            C_val[y] = ADC10MEM;                                   // collect that 10-bit value
-            if (C_val[y] > 0x0195) P1OUT |= (BIT0|BIT6);
-            else                   P1OUT &= ~(BIT0|BIT6);
-
-            y = (y+1) & 0xF;                            // This is a mod 16 increment
-} // end Center_Sensor
-
-void Right_Sensor() {
-    // RIGHT
-    static unsigned short R_val[16];
-    static unsigned char z = 0;
-
-            ADC10CTL0 = 0;                                          // Turn off ADC subsystem
-            ADC10CTL1 = INCH_5 | ADC10DIV_3 ;                       // Channel 4, ADC10CLK/4
-            ADC10AE0 = BIT5;                                        // Make P1.5 analog input
-            ADC10CTL0 = SREF_0 | ADC10SHT_3 | ADC10ON | ENC;        // Vcc & Vss as reference
-
-            ADC10CTL0 |= ADC10SC;                                   // Start a conversion
-            while(ADC10CTL1 & ADC10BUSY);                           // Wait for conversion to complete
-            R_val[z] = ADC10MEM;                                   // collect that 10-bit value
-            if (R_val[z] > 0x0230) P1OUT |= BIT6;
-            else                   P1OUT &= ~BIT6;
-
-            z = (z+1) & 0xF;                            // This is a mod 16 increment
-} // end Right_Sensor
