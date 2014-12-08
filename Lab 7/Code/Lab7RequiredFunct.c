@@ -27,9 +27,9 @@ int main(void) {
 
     while(1) {
 
-        Left_Sensor();
+//        Left_Sensor();
         Center_Sensor();
-        Right_Sensor();
+//        Right_Sensor();
 
     } // end infinite loop
 
