@@ -1,37 +1,37 @@
 //-----------------------------------------------------------------
-// Name:	Kyle Jonas
-// File:	lab5.c Required Funct
-// Date:	Fall 2014
-// Purp:	Toggle LED with IR Remote
+// Name:    Kyle Jonas
+// File:    lab5.c Required Funct
+// Date:    Fall 2014
+// Purp:    Toggle LED with IR Remote
 //-----------------------------------------------------------------
 #include <msp430g2553.h>
-#include "start5.h"
+#include "RequiredFunct.h"
 
-int32	irPacket;
-int8	newIrPacket = FALSE;
-int16	packetData[48];
-int8	packetIndex = 0;
+int32   irPacket;
+int8    newIrPacket = FALSE;
+int16   packetData[48];
+int8    packetIndex = 0;
 
 // -----------------------------------------------------------------------
 // -----------------------------------------------------------------------
 void main(void) {
 
-	initMSP430();				// Setup MSP to process IR and buttons
+    initMSP430();               // Setup MSP to process IR and buttons
 
-	while(1)  {
+    while(1)  {
 
-		//newIrPacket
-		if (newIrPacket) {
+        //newIrPacket
+        if (newIrPacket) {
 
-			if (irPacket == UP) {
-				P1OUT ^= BIT0;
-			}else if (irPacket == DOWN) {
-				P1OUT ^= BIT6;
-			}
-			newIrPacket = FALSE;
-		}
+            if (irPacket == UP) {
+                P1OUT ^= BIT0;
+            }else if (irPacket == DOWN) {
+                P1OUT ^= BIT6;
+            }
+            newIrPacket = FALSE;
+        }
 
-	} // end infinite loop
+    } // end infinite loop
 } // end main
 
 // -----------------------------------------------------------------------
@@ -49,27 +49,27 @@ void main(void) {
 // -----------------------------------------------------------------------
 void initMSP430() {
 
-	IFG1=0; 					// clear interrupt flag1
-	WDTCTL=WDTPW+WDTHOLD; 		// stop WD
+    IFG1=0;                     // clear interrupt flag1
+    WDTCTL=WDTPW+WDTHOLD;       // stop WD
 
-	BCSCTL1 = CALBC1_8MHZ;
-	DCOCTL = CALDCO_8MHZ;
+    BCSCTL1 = CALBC1_8MHZ;
+    DCOCTL = CALDCO_8MHZ;
 
-	P2SEL  &= ~BIT6;						// Setup P2.6 as GPIO not XIN
-	P2SEL2 &= ~BIT6;
-	P2DIR &= ~BIT6;
-	P2IFG &= ~BIT6;						// Clear any interrupt flag
-	P2IE  |= BIT6;						// Enable PORT 2 interrupt on pin change
+    P2SEL  &= ~BIT6;                        // Setup P2.6 as GPIO not XIN
+    P2SEL2 &= ~BIT6;
+    P2DIR &= ~BIT6;
+    P2IFG &= ~BIT6;                     // Clear any interrupt flag
+    P2IE  |= BIT6;                      // Enable PORT 2 interrupt on pin change
 
-	HIGH_2_LOW;
-	P1DIR |= BIT0 | BIT6;				// Enable updates to the LED
-	P1OUT &= ~(BIT0 | BIT6);			// An turn the LED off
+    HIGH_2_LOW;
+    P1DIR |= BIT0 | BIT6;               // Enable updates to the LED
+    P1OUT &= ~(BIT0 | BIT6);            // An turn the LED off
 
-	TA0CCR0 = 0x8000;					// create a 16mS roll-over period
-	TACTL &= ~TAIFG;					// clear flag before enabling interrupts = good practice
-	TACTL = ID_3 | TASSEL_2 | MC_1;		// Use 1:1 presclar off MCLK and enable interrupts
+    TA0CCR0 = 0x8000;                   // create a 16mS roll-over period
+    TACTL &= ~TAIFG;                    // clear flag before enabling interrupts = good practice
+    TACTL = ID_3 | TASSEL_2 | MC_1;     // Use 1:1 presclar off MCLK and enable interrupts
 
-	_enable_interrupt();
+    _enable_interrupt();
 }
 
 // -----------------------------------------------------------------------
@@ -96,68 +96,68 @@ void initMSP430() {
 // Since the duration of this half-bit determines the outcome
 // we will turn on the timer and its associated interrupt.
 // -----------------------------------------------------------------------
-#pragma vector = PORT2_VECTOR			// This is from the MSP430G2553.h file
+#pragma vector = PORT2_VECTOR           // This is from the MSP430G2553.h file
 
 __interrupt void pinChange (void) {
 
-	int8	pin;
-	int16	pulseDuration;			// The timer is 16-bits
+    int8    pin;
+    int16   pulseDuration;          // The timer is 16-bits
 
-	if (IR_PIN)		pin=1;	else pin=0;
+    if (IR_PIN)     pin=1;  else pin=0;
 
-	switch (pin) {					// read the current pin level
-		case 0:						// !!!!!!!!!NEGATIVE EDGE!!!!!!!!!!
-			pulseDuration = TAR;
+    switch (pin) {                  // read the current pin level
+        case 0:                     // !!!!!!!!!NEGATIVE EDGE!!!!!!!!!!
+            pulseDuration = TAR;
 
-			//----------------Added Code-----------
-			// Logic 0
-			if ((pulseDuration > minLogic0Pulse) && (pulseDuration < maxLogic0Pulse)) {
-				irPacket = (irPacket<<1) | 0;
-			}
-			// Logic 1
-			if ((pulseDuration > minLogic1Pulse) && (pulseDuration < maxLogic1Pulse)) {
-				irPacket = (irPacket<<1) | 1;
-			}
+            //----------------Added Code-----------
+            // Logic 0
+            if ((pulseDuration > minLogic0Pulse) && (pulseDuration < maxLogic0Pulse)) {
+                irPacket = (irPacket<<1) | 0;
+            }
+            // Logic 1
+            if ((pulseDuration > minLogic1Pulse) && (pulseDuration < maxLogic1Pulse)) {
+                irPacket = (irPacket<<1) | 1;
+            }
 
-			packetData[packetIndex++] = pulseDuration;  // moved from after pulseDuration = TAR
-			TACTL = 0;		// TmrA off
-			//-------------------------------------
+            packetData[packetIndex++] = pulseDuration;  // moved from after pulseDuration = TAR
+            TACTL = 0;      // TmrA off
+            //-------------------------------------
 
-			LOW_2_HIGH; 				// Setup pin interrupr on positive edge
-			break;
+            LOW_2_HIGH;                 // Setup pin interrupr on positive edge
+            break;
 
-		case 1:							// !!!!!!!!POSITIVE EDGE!!!!!!!!!!!
-			TAR = 0x0000;				// time measurements are based at time 0
+        case 1:                         // !!!!!!!!POSITIVE EDGE!!!!!!!!!!!
+            TAR = 0x0000;               // time measurements are based at time 0
 
-			//----------------Added Code-----------
-			TA0CCR0 = 0x2710;
-			TACTL = ID_3 | TASSEL_2 | MC_1;			// Turn TmrA on
-			//-------------------------------------
+            //----------------Added Code-----------
+            TA0CCR0 = 0x2710;
+            TACTL = ID_3 | TASSEL_2 | MC_1;         // Turn TmrA on
+            //-------------------------------------
 
-			HIGH_2_LOW; 				// Setup pin interrupr on negative edge
-			break;
-	} // end switch
+            HIGH_2_LOW;                 // Setup pin interrupr on negative edge
+            break;
+    } // end switch
 
-	P2IFG &= ~BIT6;			// Clear the interrupt flag to prevent immediate ISR re-entry
+    P2IFG &= ~BIT6;         // Clear the interrupt flag to prevent immediate ISR re-entry
 
 } // end pinChange ISR
 
 
 
 // -----------------------------------------------------------------------
-//				0 half-bit		1 half-bit		TIMER A COUNTS		TIMER A COUNTS
-//	Logic 0		621 counts		561 counts
-//	Logic 1		1216 counts		559 counts
-//	Start		2401 counts		564 counts
-//	End			673 counts		21690 counts
+//              0 half-bit      1 half-bit      TIMER A COUNTS      TIMER A COUNTS
+//  Logic 0     621 counts      561 counts
+//  Logic 1     1216 counts     559 counts
+//  Start       2401 counts     564 counts
+//  End         673 counts      21690 counts
 //
 // -----------------------------------------------------------------------
-#pragma vector = TIMER0_A1_VECTOR			// This is from the MSP430G2553.h file
+#pragma vector = TIMER0_A1_VECTOR           // This is from the MSP430G2553.h file
 __interrupt void timerOverflow (void) {
 
-	TACTL = 0;
-	TACTL ^= TAIE; 			// Turn off TmrA intereupt
-	packetIndex = 0;
-	newIrPacket = TRUE;
-	TACTL &= ~TAIFG;			// Clear TAIFG
+    TACTL = 0;
+    TACTL ^= TAIE;          // Turn off TmrA intereupt
+    packetIndex = 0;
+    newIrPacket = TRUE;
+    TACTL &= ~TAIFG;            // Clear TAIFG
 }
