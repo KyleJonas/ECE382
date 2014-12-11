@@ -113,6 +113,73 @@ For the H file I declaired all of the constatnts for the sensors and motors as w
 
 ```
 
+For the methods.c file it was basically just adding the previous methods in from Lab 6 and Lab 7. the file containied the methods to drive the robot as well as the code for the IR sensors. An example of some of the Motor and IR method code are shown below.
+
+```
+int Right_Sensor() {
+    // RIGHT
+
+            ADC10CTL0 = 0;                                          // Turn off ADC subsystem
+            ADC10CTL1 = INCH_5 | ADC10DIV_3 ;                       // Channel 4, ADC10CLK/4
+            ADC10AE0 = R_Sensor;                                        // Make P1.5 analog input
+            ADC10CTL0 = SREF_0 | ADC10SHT_3 | ADC10ON | ENC;        // Vcc & Vss as reference
+
+            int i=0;
+            while (i<16){
+                ADC10CTL0 |= ADC10SC;                                   // Start a conversion
+                while(ADC10CTL1 & ADC10BUSY);                           // Wait for conversion to complete
+                sample[i] = ADC10MEM;                                   // collect that 10-bit value
+                i++;
+            }
+
+            int avg = Average(sample);
+            return avg;
+} // end Right_Sensor
+
+int Average(unsigned short sample[]){
+    int avg = 0;
+    int sum = 0;
+    int i=0;
+
+    while (i<16){
+        sum += sample[0];
+        i++;
+    }
+    avg = sum/16;
+    return avg;
+} // end Average
+```
+
+```
+void Forward(){
+
+    // left motor
+    P2OUT |= BIT0;      // EN
+    P2OUT |= BIT1;      // Forward
+    TA1CCTL1 = OUTMOD_7;                    // set TACCTL1 to Reset / Set mode
+
+    // right motor
+    P2OUT |= BIT3;      // EN
+    P2OUT &= ~BIT5;     // Forward
+    TA1CCTL2 = OUTMOD_3;                    // set TACCTL2 to Set / Reset mode
+
+}// end forward
+
+void Left(){
+
+    // left motor
+    P2OUT |= BIT0;      // EN
+    P2OUT &= ~BIT1;     // Reverse
+    TA1CCTL1 = OUTMOD_3;                    // set TACCTL1 to Reset / Set mode
+
+    // right motor
+    P2OUT |= BIT3;      // EN
+    P2OUT &= ~BIT5;     // Forward
+    TA1CCTL2 = OUTMOD_3;                    // set TACCTL2 to Set / Reset mode
+
+}// end left
+```
+
 ###Debugging
 
 ###Observations/Conclusion
