@@ -58,6 +58,10 @@ Each timer lasts 1 us.
 ##Basic Functionality
 Turn an LED on and off with one button on the remote. Turn another LED on and off with a different button.   
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=rIEO3tI1DJo
+" target="_blank"><img src="http://img.youtube.com/vi/rIEO3tI1DJo/0.jpg" 
+alt="Required Functionality" width="240" height="180" border="10" /></a>   
+
 To compete basic functionality I started by completing my header file with the hex values for my remotes buttons and the average logic pulses. I then used the schematic to fill in the missin sections of the RequiredFunct.C file.   
 
 ![Required Schematic](https://github.com/KyleJonas/ECE382_Lab5/blob/master/Images/RequiredFunct.jpg?raw=true "Required Schematic")   
