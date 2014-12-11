@@ -181,9 +181,10 @@ void Left(){
 ```
 
 ###Debugging
+There was not a lot of debugging on the code side of this lab. The hardest part of the lab wsa just getting my CCS to work properly. I ultimatly had to reinstal CCS which took up a lot of time. The main parts of the code I did have to work on was getting the algorithm to determine what walls you could see and what way you needed to turn. While coding this wasnt hard my sensors did not like to agree with me. My left sensor was unable to get reading when I ran my robot. This made it hard determine when I needed to turn and prohibited me from being able to do A or B functionality. For most of the sensors I had to add more shielding in order to get better ADC values without interference. To overcome some of these issues I retook IR sensor data but I still was having issues with the left sensor.
 
 ###Observations/Conclusion
+This lab showed me the importance of implementing good files and methods. Because I broke the code out into methods, header, and main it was easy to copy in my code from the last 2 labs in to the necessarry responce. This took the bulk of the work away from creating the IR and motor driving code and moved it on developing the algorithm to deterimine which way you need to turn.
 
 ###Documentation
-
-
+I did not reveive any help on my code. I did get help from Capt Trimble and Kevin Cabusora in troubleshooting errors I was having with my CCS and then installing CCS. Austin Bolinger and Kevin Cabusora did lend me their computers so that I could run my own Lab 8 code while my CCS was reinstalling. 
