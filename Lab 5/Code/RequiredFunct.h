@@ -38,18 +38,17 @@ __interrupt void timerOverflow (void);
 #define     averageLogic0Pulse  594
 #define     averageLogic1Pulse  1633
 #define     averageStartPulse   4437
-#define     minLogic0Pulse      averageLogic0Pulse - 200
-#define     maxLogic0Pulse      averageLogic0Pulse + 200
-#define     minLogic1Pulse      averageLogic1Pulse - 200
-#define     maxLogic1Pulse      averageLogic1Pulse + 200
-#define     minStartPulse       averageStartPulse - 200
-#define     maxStartPulse       averageStartPulse + 200
+#define     minLogic0Pulse      averageLogic0Pulse - 220
+#define     maxLogic0Pulse      averageLogic0Pulse + 220
+#define     minLogic1Pulse      averageLogic1Pulse - 220
+#define     maxLogic1Pulse      averageLogic1Pulse + 220
+#define     minStartPulse       averageStartPulse - 220
+#define     maxStartPulse       averageStartPulse + 220
 
 
 #define     PWR     0x61A0F00F
 
-#define     UP      0x61A050AF
-#define     DOWN    0x61A0D02F
-#define     LEFT    0x61A0B04F
-#define     RIGHT   0x61A030CF
+#define		ONE		0x61A000FF
+#define		TWO		0x61A0807F
+#define		THR		0x61A0408F
 

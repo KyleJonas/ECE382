@@ -21,11 +21,11 @@ void main(void) {
     while(1)  {
 
         //newIrPacket
-        if (newIrPacket) {
+        if (newIrPacket == TRUE) {
 
-            if (irPacket == UP) {
+            if (irPacket == PWR) {
                 P1OUT ^= BIT0;
-            }else if (irPacket == DOWN) {
+            }else if (irPacket == ONE) {
                 P1OUT ^= BIT6;
             }
             newIrPacket = FALSE;
@@ -131,7 +131,7 @@ __interrupt void pinChange (void) {
 
             //----------------Added Code-----------
             TA0CCR0 = 0x2710;
-            TACTL = ID_3 | TASSEL_2 | MC_1;         // Turn TmrA on
+            TACTL = ID_3 | TASSEL_2 | MC_1 | TAIE;         // Turn TmrA on
             //-------------------------------------
 
             HIGH_2_LOW;                 // Setup pin interrupr on negative edge
@@ -145,12 +145,6 @@ __interrupt void pinChange (void) {
 
 
 // -----------------------------------------------------------------------
-//              0 half-bit      1 half-bit      TIMER A COUNTS      TIMER A COUNTS
-//  Logic 0     621 counts      561 counts
-//  Logic 1     1216 counts     559 counts
-//  Start       2401 counts     564 counts
-//  End         673 counts      21690 counts
-//
 // -----------------------------------------------------------------------
 #pragma vector = TIMER0_A1_VECTOR           // This is from the MSP430G2553.h file
 __interrupt void timerOverflow (void) {
@@ -161,3 +155,5 @@ __interrupt void timerOverflow (void) {
     newIrPacket = TRUE;
     TACTL &= ~TAIFG;            // Clear TAIFG
 }
+
+
