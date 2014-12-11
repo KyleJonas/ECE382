@@ -5,7 +5,7 @@
  */
 
 #include "msp430g2553.h"
-#include "Lab8.c"
+#include "Lab8.h"
 
 unsigned short sample[16];
 

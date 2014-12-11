@@ -58,16 +58,50 @@ int main(void) {
 
     while(1) {
 
-        if (Center_Sensor() < C_Test) {         // No front wall
+        if (Center_Sensor() < C_Far) {         // No front wall
 
-            Forward();
-            __delay_cycles(run);
-            Stop();
-            __delay_cycles(delay);
+//        	if ( Left_Sensor() > L_Close) {	// to far left
+//
+//					Right();
+//                	__delay_cycles(hTurn);
+//            		Stop();
+//            		__delay_cycles(delay);
+//					Forward();
+//            		__delay_cycles(run);
+//            		Stop();
+//            		__delay_cycles(delay);
+//					Left();
+//                	__delay_cycles(hTurn);
+//
+//        	} // end to far left
+//
+//        	if ( Right_Sensor() > R_Close) {	// to far right
+//
+//					Left();
+//                	__delay_cycles(hTurn);
+//            		Stop();
+//            		__delay_cycles(delay);
+//					Forward();
+//            		__delay_cycles(run);
+//            		Stop();
+//            		__delay_cycles(delay);
+//					Right();
+//                	__delay_cycles(hTurn);
+//
+//        	} // end to far right
 
-        }else if (Center_Sensor() > C_Test) {   // Hit front wall
+//        	if ( (Left_Sensor() < L_Close) && (Right_Sensor() < R_Close) ) {	// in the middle
 
-            if ( (Left_Sensor() > L_Test) && (Right_Sensor() > R_Test) ) {   // Yes L, Yes R
+        			Forward();
+            		__delay_cycles(run);
+            		Stop();
+            		__delay_cycles(delay);
+
+//        	}// end in the middle
+
+        }else if (Center_Sensor() > C_Far) {   // Hit front wall
+
+            if ( (Left_Sensor() > L_Far) && (Right_Sensor() > R_Far) ) {   // Yes L, Yes R
                 // Stop, in corner
                 Reverse();
                 __delay_cycles(run);
@@ -75,21 +109,30 @@ int main(void) {
                 __delay_cycles(delay);
             }// end stop in corner
 
-            if ( (Left_Sensor() < L_Test) && (Right_Sensor() > R_Test) ) {   // No L, Yes R
+            if ( (Left_Sensor() < L_Far) && (Right_Sensor() > R_Far) ) {   // No L, Yes R
                 // Turn L
+                Stop();
+                __delay_cycles(delay);
                 Left();
                 __delay_cycles(Turn);
 
+
             }// end left turn
 
-            if ( (Left_Sensor() > L_Test) && (Right_Sensor() < R_Test) ) {   // Yes L, No R
+            if ( (Left_Sensor() > L_Far) && (Right_Sensor() < R_Far) ) {   // Yes L, No R
                 // Turn R
+                Stop();
+                __delay_cycles(delay);
                 Right();
                 __delay_cycles(Turn);
+
             }// end right turn
 
-            if ( (Left_Sensor() < L_Test) && (Right_Sensor() < R_Test) ) {   // No L, No R
+            if ( (Left_Sensor() < L_Far) && (Right_Sensor() < R_Far) ) {   // No L, No R
                 // Turn L
+                Stop();
+                __delay_cycles(delay);
+
                 Left();
                 __delay_cycles(Turn);
 

@@ -40,10 +40,10 @@
 #define R_Test      0x0230
 
 // Motor
-#define run     1000000
-#define delay   3000000
-#define hTurn   0500000
-#define Turn    0750000
+#define run     0500000
+#define delay   0750000
+#define hTurn   0450000
+#define Turn    1500000		//0600000
 
 
 ////////// METHODS //////////
