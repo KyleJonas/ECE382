@@ -53,15 +53,24 @@ int main(void) {
     TA1CCTL2 = OUTMOD_3;                    // set TACCTL1 to Reset / Set mode
 
 
-
     __delay_cycles(delay);                  // Inital delay for sensor to catch up
 
     while(1) {
 
+    	///// Display LED /////
+        if (Left_Sensor() > L_Far) P1OUT |= BIT0;
+        else               P1OUT &= ~BIT0;
+
+        if (Center_Sensor() > C_Far) P1OUT |= (BIT0|BIT6);
+        else                 P1OUT &= ~(BIT0|BIT6);
+
+        if (Right_Sensor() > R_Far) P1OUT |= BIT6;
+        else                P1OUT &= ~BIT6;
+
+        ///// Drive /////
         if (Center_Sensor() < C_Far) {         // No front wall
 
 //        	if ( Left_Sensor() > L_Close) {	// to far left
-//
 //					Right();
 //                	__delay_cycles(hTurn);
 //            		Stop();
@@ -76,7 +85,6 @@ int main(void) {
 //        	} // end to far left
 //
 //        	if ( Right_Sensor() > R_Close) {	// to far right
-//
 //					Left();
 //                	__delay_cycles(hTurn);
 //            		Stop();
@@ -89,7 +97,7 @@ int main(void) {
 //                	__delay_cycles(hTurn);
 //
 //        	} // end to far right
-
+//
 //        	if ( (Left_Sensor() < L_Close) && (Right_Sensor() < R_Close) ) {	// in the middle
 
         			Forward();
@@ -107,6 +115,7 @@ int main(void) {
                 __delay_cycles(run);
                 Stop();
                 __delay_cycles(delay);
+
             }// end stop in corner
 
             if ( (Left_Sensor() < L_Far) && (Right_Sensor() > R_Far) ) {   // No L, Yes R
@@ -115,7 +124,6 @@ int main(void) {
                 __delay_cycles(delay);
                 Left();
                 __delay_cycles(Turn);
-
 
             }// end left turn
 
@@ -132,7 +140,6 @@ int main(void) {
                 // Turn L
                 Stop();
                 __delay_cycles(delay);
-
                 Left();
                 __delay_cycles(Turn);
 

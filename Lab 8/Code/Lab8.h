@@ -42,7 +42,7 @@
 // Motor
 #define run     0500000
 #define delay   0750000
-#define hTurn   0450000
+#define hTurn   0300000
 #define Turn    1500000		//0600000
 
 
